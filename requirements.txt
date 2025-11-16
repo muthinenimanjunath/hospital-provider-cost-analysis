@@ -1,8 +1,5 @@
-# Financial & Operational Analysis of U.S. Hospitals
-# CMS Hospital Provider Cost Reports (2011–2022)
-# Basic dependencies used so far
-
 pandas==2.2.2
 numpy==1.26.4
 matplotlib==3.9.2
 seaborn==0.13.2
+jupyter
