@@ -1,41 +1,84 @@
-# Financial and Operational Analysis of U.S. Hospitals  
-### CMS Hospital Provider Cost Reports (2011–2022)
+# **Financial & Operational Analysis of U.S. Hospitals**
 
-## Project Overview
-This capstone project analyzes a decade of U.S. Hospital Provider Cost Reports published by the Centers for Medicare & Medicaid Services (CMS).  
-The aim is to evaluate hospital financial performance, operational efficiency, and geographic variations from 2011 to 2022.
+### **CMS Hospital Provider Cost Reports (2011–2022)**
 
-This project is **currently in progress** as part of the Data Analytics for Business program.  
-The preliminary dashboard has been developed, and further refinement, KPI validation, and deep-dive analysis will continue.
-
-The project currently includes:
-- Collection and consolidation of yearly CMS cost datasets  
-- Initial and secondary data cleaning  
-- Exploratory Data Analysis (EDA) and required column selection  
-- Creation of a KPI-ready dataset  
-- Development of a preliminary Power BI dashboard containing three integrated views  
-Additional phases will enhance data validation, dashboard refinement, and insight development.
+![Python](https://img.shields.io/badge/Python-3.13-blue)
+![Power BI](https://img.shields.io/badge/PowerBI-Dashboard-yellow)
+![Status](https://img.shields.io/badge/Project-In%20Progress-orange)
 
 ---
 
-## Objectives
-- Combine twelve annual CMS hospital cost report files into a unified dataset  
-- Standardize variable names and resolve structural differences across years  
-- Perform thorough cleaning, validation, and preprocessing  
-- Select key variables for KPI creation  
-- Develop financial, operational, and geographic KPIs  
-- Build an interactive Power BI dashboard to visualize trends  
-- Continue refinement and enhancement as analysis progresses  
+# **Table of Contents**
+
+* [Project Overview](#project-overview)
+* [Executive Summary](#executive-summary)
+* [Key Insights](#key-insights)
+* [Repository Structure](#repository-structure)
+* [Workflow Summary](#workflow-summary)
+* [Key Performance Indicators (KPIs)](#key-performance-indicators-kpis)
+* [Power BI Dashboards](#power-bi-dashboards)
+* [Dashboard Preview](#dashboard-preview)
+* [Tools and Technologies](#tools-and-technologies)
+* [How to Run the Project](#how-to-run-the-project)
+* [Future Enhancements](#future-enhancements)
+* [Team Members](#team-members)
+* [References](#references)
 
 ---
 
-## Repository Structure
+# **Project Overview**
+
+This capstone project analyzes 12 years of CMS Hospital Provider Cost Reports (2011–2022) to understand:
+
+* Hospital financial performance
+* Operational efficiency
+* Geographic variations
+* Post-COVID operational shifts
+
+Project deliverables include:
+
+* Consolidation of CMS datasets
+* Multi-level data cleaning
+* Exploratory Data Analysis (EDA)
+* KPI engineering
+* Preliminary and final Power BI dashboards
+* Project documentation (Business Case, Charter, Presentation, Minutes)
+
+This project is part of the Data Analytics for Business program (Group 8).
+
+---
+
+# **Executive Summary**
+
+Hospitals across the U.S. face operational and financial challenges.
+This project evaluates key indicators to help stakeholders understand:
+
+* Profitability trends
+* Bed utilization efficiency
+* Staffing impact on operations
+* State-level variations in hospital performance
+
+The dashboards and KPIs provide actionable insights for decision-making.
+
+---
+
+# **Key Insights**
+
+* For-profit hospitals demonstrate higher profit margins
+* Non-profit hospitals process larger patient volumes
+* Strong variation across states in revenue and expenses
+* Occupancy rates declined in multiple states post-COVID
+* Staffing shortages correlate with discharge and stay duration issues
+
+---
+
+# **Repository Structure**
 
 ```
 hospital-provider-cost-analysis/
 │
 ├── data_collection/
-│   ├── cms_raw/                    
+│   ├── cms_raw/
 │   ├── combined/
 │   └── data_collection.ipynb
 │
@@ -47,8 +90,25 @@ hospital-provider-cost-analysis/
 │   ├── kpi_ready/
 │   └── eda.ipynb
 │
+├── documents/
+│   ├── Business_Case.pdf
+│   ├── Capstone_Group_8.pptx
+│   ├── Meeting_Minutes_Part_1.pdf
+│   ├── Meeting_Minutes_Part_2.pdf
+│   ├── Meeting_Minutes_Part_3.pdf
+│   ├── Meeting_Minutes_Part_4.pdf
+│   ├── Meeting_Minutes_Part_5.pdf
+│   ├── Summarized_Meeting_Minutes.pdf
+│   ├── Preliminary_Research_Document.pdf
+│   └── Project_Charter.pdf
+│
 ├── powerbi/
-│   └── Preliminary_Dashboard_Group_8.pbix
+│   ├── Preliminary_Dashboard_Group_8.pbix
+│   ├── Final_Dashboard_Group_8.pbix
+│   └── images/
+│       ├── financial_view.jpg
+│       ├── operational_view.jpg
+│       └── geographic_view.jpg
 │
 ├── README.md
 └── requirements.txt
@@ -56,153 +116,165 @@ hospital-provider-cost-analysis/
 
 ---
 
-## Workflow Summary
+# **Workflow Summary**
 
-### 1. Data Collection  
+## 1. Data Collection
+
 Notebook: `data_collection/data_collection.ipynb`
 
-Tasks performed:
-- Imported yearly CMS CostReport CSV files  
-- Standardized column names  
-- Merged all datasets into one master file  
-- Saved combined file to `data_collection/combined/`  
+* Loaded annual CMS files
+* Standardized variables
+* Merged datasets into master file
+* Output saved to `data_collection/combined/`
 
 ---
 
-### 2. Initial Data Cleaning  
+## 2. Data Cleaning
+
 Notebook: `data_processing/data_cleaning.ipynb`
 
-Performed:
-- Missing value handling  
-- Duplicate removal  
-- Data type corrections  
-- Standardization of categorical fields  
-- Structural validation  
-
-Output:  
-`data_processing/cleaned/cms_hospital_costs_2011_2022_cleaned.csv`
+* Missing value treatment
+* Duplicate removal
+* Categorization cleanup
+* Financial integrity validation
+* Output saved to `data_processing/cleaned/`
 
 ---
 
-### 3. Exploratory Data Analysis (EDA)  
+## 3. Exploratory Data Analysis (EDA)
+
 Notebook: `eda/eda.ipynb`
 
-Performed:
-- Required column selection  
-- Second-stage cleaning  
-- Handling KPI-specific missing values  
-- Validation of financial and operational metrics  
-- Exploratory analysis by ownership, facility type, and region  
-
-Output:  
-`eda/kpi_ready/hospital_kpi_ready.csv`
+* Further cleaning
+* KPI feature engineering
+* Outlier handling
+* Ownership, facility, and geographic insights
+* Output saved to `eda/kpi_ready/`
 
 ---
 
-## Key Performance Indicators (KPIs)
+# **Key Performance Indicators (KPIs)**
 
-### Financial KPIs
-- Profit Margin  
-- Expense Ratio  
-- Current Ratio  
-- Debt-to-Asset Ratio  
+## Financial KPIs
 
-### Operational KPIs
-- Occupancy Rate  
-- Revenue per Bed  
-- Staff-to-Bed Ratio  
-- Discharges per Bed  
-- Average Length of Stay  
+* Profit Margin
+* Expense Ratio
+* Current Ratio
+* Debt-to-Asset Ratio
+* Revenue per Bed
+
+## Operational KPIs
+
+* Occupancy Rate
+* Staff-to-Bed Ratio
+* Discharges per Bed
+* Average Length of Stay
 
 ---
 
-## Power BI Dashboard  
-A preliminary dashboard containing three sections is included:
+# **Power BI Dashboards**
 
-Location:  
-`powerbi/Preliminary_Dashboard_Group_8.pbix`
+## Final Dashboard
 
-### Financial Dashboard
-- Profit margin, expense ratio, current ratio, debt-to-asset ratio  
-- Profit vs expense trend  
-- Profit by facility type  
-- Revenue by provider type  
-
-### Operational Dashboard
-- Occupancy rate  
-- Staff-to-bed ratio  
-- Discharges per bed  
-- Length of stay  
-- Revenue per bed  
-- Hospital drill-down  
-
-### Geographical Dashboard
-- Profit margin by state  
-- Revenue centers (city-level)  
-- Occupancy by state  
-- Profit trends by state and year  
-
-A final refined dashboard will be added as:  
 `powerbi/Final_Dashboard_Group_8.pbix`
+Includes:
+
+* Financial performance
+* Operational efficiency trends
+* Geographic mapping
+* Drill-down hospital analytics
 
 ---
 
-## Tools and Technologies
-- Python 3.13  
-- pandas, numpy, matplotlib, seaborn  
-- Jupyter Notebook  
-- Power BI Desktop  
-- Git & GitHub  
+## Preliminary Dashboard
+
+`powerbi/Preliminary_Dashboard_Group_8.pbix`
+Designed for initial concept review and iteration.
 
 ---
 
-## How to Run the Project
+# **Dashboard Preview**
 
-### Step 1 — Clone repository
+### Financial Overview
+
+![Financial Overview](powerbi/images/financial_view.jpg)
+
+### Operational Overview
+
+![Operational Overview](powerbi/images/operational_view.jpg)
+
+### Geographic Analysis
+
+![Geographic Analysis](powerbi/images/geographic_view.jpg)
+
+---
+
+# **Tools and Technologies**
+
+* Python 3.13
+* pandas, numpy, matplotlib, seaborn
+* Jupyter Notebook
+* Power BI Desktop
+* Git & GitHub
+
+---
+
+# **How to Run the Project**
+
+## Step 1 — Clone repository
+
 ```
 git clone https://github.com/muthinenimanjunath/hospital-provider-cost-analysis.git
 cd hospital-provider-cost-analysis
 ```
 
-### Step 2 — Install dependencies
+## Step 2 — Install dependencies
+
 ```
 pip install -r requirements.txt
 ```
 
-### Step 3 — Execute notebooks
-1. data_collection.ipynb  
-2. data_cleaning.ipynb  
-3. eda.ipynb  
+## Step 3 — Execute notebooks
 
-### Step 4 — Open Dashboard  
-Open:
+1. `data_collection.ipynb`
+2. `data_cleaning.ipynb`
+3. `eda.ipynb`
+
+## Step 4 — Open dashboards
+
 ```
-powerbi/Preliminary_Dashboard_Group_8.pbix
+powerbi/Final_Dashboard_Group_8.pbix
 ```
 
 ---
 
-## Project Status
-This project is **in progress**.  
-Final EDA, KPI enhancements, and dashboard refinement will be completed in upcoming phases.
+# **Future Enhancements**
+
+* Predictive modeling for profitability
+* Clustering-based hospital segmentation
+* Automated ETL pipeline for CMS yearly updates
+* Deployment through Power BI Service
+* Time-series forecasting
 
 ---
 
-## Team Members (Group 8)
-- Manjunath Muthineni – Team Lead & Data Integration  
-- Abhishekh Choudhary – Data Cleaning Lead  
-- Krishna Chaitanya Venuturumilli – Visualization Lead  
-- Neha Oberoi – Finance SME  
-- Rajesh Thota – Documentation Lead  
+# **Team Members (Group 8)**
+
+* Manjunath Muthineni – Team Lead & Data Integration
+* Abhishekh Choudhary – Data Cleaning Lead
+* Krishna Chaitanya Venuturumilli – Visualization Lead
+* Neha Oberoi – Research & Methodology Lead
+* Rajesh Thota – Documentation Lead
 
 ---
 
-## References
-- CMS Hospital Provider Cost Report Data  
-  https://data.cms.gov/provider-compliance/cost-report/hospital-provider-cost-report  
+# **References**
 
-- Hospital Provider Cost Report Dataset (Data.gov)  
-  https://catalog.data.gov/dataset/hospital-provider-cost-report-7c92c  
+* CMS Hospital Provider Cost Report Data
+  [https://data.cms.gov/provider-compliance/cost-report/hospital-provider-cost-report](https://data.cms.gov/provider-compliance/cost-report/hospital-provider-cost-report)
 
-- Microsoft Power BI Documentation  
-  https://learn.microsoft.com/en-us/power-bi/
+* Hospital Provider Cost Report Dataset (Data.gov)
+  [https://catalog.data.gov/dataset/hospital-provider-cost-report-7c92c](https://catalog.data.gov/dataset/hospital-provider-cost-report-7c92c)
+
+* Microsoft Power BI Documentation
+  [https://learn.microsoft.com/en-us/power-bi/](https://learn.microsoft.com/en-us/power-bi/)
