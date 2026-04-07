@@ -1,6 +1,1 @@
-﻿data/raw/
-data/interim/
-models/
-archive/
-*.csv
-*.pkl
+/notebooks/models/
