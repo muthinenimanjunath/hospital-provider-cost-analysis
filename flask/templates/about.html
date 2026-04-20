@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .methodology-header {
+        background: linear-gradient(135deg, var(--primary) 0%, #7C3AED 100%);
+        border-radius: 20px; padding: 3rem; color: white; margin-bottom: 3rem;
+        box-shadow: 0 20px 40px rgba(67, 24, 255, 0.2);
+    }
+    
+    .stat-card {
+        background: rgba(255, 255, 255, 0.1); border-left: 4px solid var(--accent);
+        padding: 1.5rem; border-radius: 12px; backdrop-filter: blur(10px);
+    }
+
+    .timeline { position: relative; padding-left: 3rem; margin-bottom: 4rem; }
+    .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 3px; background: #E2E8F0; border-radius: 3px; }
+    .timeline-item { position: relative; margin-bottom: 2.5rem; }
+    .timeline-icon {
+        position: absolute; left: -3rem; width: 34px; height: 34px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; z-index: 1; box-shadow: 0 0 0 5px var(--bg-color);
+    }
+    .timeline-content { background: white; padding: 1.5rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(112, 144, 176, 0.08); border: 1px solid rgba(0,0,0,0.02); }
+
+    .model-card { border-left: 5px solid var(--primary); transition: all 0.3s ease; }
+    .model-card:hover { transform: translateX(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+
+    .cluster-pill {
+        background: #F4F7FE; color: var(--secondary); font-weight: 600; padding: 8px 16px; font-size: 0.9rem;
+        border-radius: 50px; display: inline-block; margin: 4px; border: 1px solid #E2E8F0; transition: all 0.3s;
+    }
+    
+    .team-card {
+        background: white; border-radius: 12px; padding: 15px; text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #E2E8F0;
+    }
+</style>
+
+<div class="methodology-header text-center">
+    <h1 class="fw-bold text-white mb-3"><i class="fa-solid fa-server me-2"></i> Project Architecture</h1>
+    <p class="lead text-white-50 mx-auto" style="max-width: 700px;">
+        An end-to-end data science lifecycle analyzing 12 years of CMS Hospital Provider Cost Reports (2011–2022) integrated with BLS and Census records.
+    </p>
+    
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="stat-card text-start">
+                <h6 class="text-white-50 text-uppercase fw-bold mb-1">Dataset Volume</h6>
+                <h2 class="fw-bold mb-0 text-white">69,555</h2>
+                <small class="text-white-50">Cleaned Hospital Records</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card text-start">
+                <h6 class="text-white-50 text-uppercase fw-bold mb-1">Feature Space</h6>
+                <h2 class="fw-bold mb-0 text-white">27</h2>
+                <small class="text-white-50">Demographic & Financial KPIs</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card text-start">
+                <h6 class="text-white-50 text-uppercase fw-bold mb-1">ML Pipelines</h6>
+                <h2 class="fw-bold mb-0 text-white">3</h2>
+                <small class="text-white-50">Supervised & Unsupervised</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h4 class="fw-bold mb-4"><i class="fa-solid fa-code-branch me-2" style="color: var(--primary);"></i> Project Evolution</h4>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-icon bg-secondary"><i class="fa-solid fa-chart-simple"></i></div>
+                <div class="timeline-content">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="fw-bold mb-0 text-dark">Phase 1: Descriptive Analytics</h5>
+                        <span class="badge bg-secondary">Capstone 1</span>
+                    </div>
+                    <p class="text-muted mb-2">
+                        The foundation of this architecture established a baseline understanding of hospital financial health. We consolidated 12 years of CMS data and engineered critical KPIs. We deployed an interactive <strong>Power BI Dashboard</strong> mapping operational trends and geographic cost disparities.
+                    </p>
+                    <small class="text-uppercase fw-bold text-muted" style="font-size: 0.75rem;">Key Technologies: Pandas, Seaborn, Power BI</small>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon" style="background: var(--primary);"><i class="fa-solid fa-brain"></i></div>
+                <div class="timeline-content" style="border-left: 4px solid var(--primary);">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="fw-bold mb-0 text-dark">Phase 2: Predictive Intelligence</h5>
+                        <span class="badge" style="background: var(--primary);">Capstone 2 (Current)</span>
+                    </div>
+                    <p class="text-muted mb-2">
+                        Transitioning from descriptive to predictive analysis. This Flask application deploys advanced Machine Learning ensembles, allowing stakeholders to input specific hospital metrics to predict profitability and algorithmically segment facilities in real-time.
+                    </p>
+                    <small class="text-uppercase fw-bold text-muted" style="font-size: 0.75rem;">Key Technologies: Scikit-Learn, Flask, Bootstrap 5</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-2 mb-5">
+    <div class="col-lg-6">
+        <h4 class="fw-bold mb-4"><i class="fa-solid fa-bullseye me-2" style="color: var(--primary);"></i> Supervised Learning</h4>
+        <div class="modern-card model-card mb-4">
+            <h5 class="fw-bold text-dark">1. Profit Margin Prediction</h5>
+            <span class="badge bg-primary mb-3">Random Forest Regressor</span>
+            <p style="color: var(--text-muted);">Trained using a 300-tree ensemble to predict overall profitability.</p>
+            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                <span class="text-muted fw-bold">Test R² Score:</span>
+                <span class="fs-5 fw-bold" style="color: var(--primary);">0.4060</span>
+            </div>
+        </div>
+        <div class="modern-card model-card" style="border-left-color: var(--accent);">
+            <h5 class="fw-bold text-dark">2. Charity Care Ratio Prediction</h5>
+            <span class="badge bg-success mb-3">Extra Trees Regressor</span>
+            <p style="color: var(--text-muted);">Utilizes randomized split points to reduce variance when predicting the ratio of uncompensated care.</p>
+            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                <span class="text-muted fw-bold">Test R² Score:</span>
+                <span class="fs-5 fw-bold" style="color: var(--accent);">0.5947</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <h4 class="fw-bold mb-4"><i class="fa-solid fa-chart-pie me-2" style="color: var(--accent);"></i> Unsupervised Segmentation</h4>
+        <div class="modern-card h-100">
+            <h5 class="fw-bold text-dark">K-Means Clustering</h5>
+            <p style="color: var(--text-muted);">Facilities are segmented into distinct operational archetypes based on a 13-feature standardized matrix.</p>
+            <h6 class="fw-bold mt-4 mb-3">Identified Archetypes:</h6>
+            <div>
+                <span class="cluster-pill">High Performing</span>
+                <span class="cluster-pill">High Utilization</span>
+                <span class="cluster-pill">Cost Inefficient</span>
+                <span class="cluster-pill">Underperforming</span>
+                <span class="cluster-pill">Charity Focused</span>
+                <span class="cluster-pill">Staff Heavy</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="my-5" style="border-color: #E2E8F0;">
+<div class="row text-center mb-4">
+    <div class="col-12"><h4 class="fw-bold"><i class="fa-solid fa-users me-2 text-muted"></i> Data Analytics for Business — Group 8</h4></div>
+</div>
+<div class="row justify-content-center g-3 pb-5">
+    <div class="col-md-2 col-sm-4"><div class="team-card"><span class="fw-bold text-dark">Manjunath M.</span><br><small class="text-muted">Data Integration</small></div></div>
+    <div class="col-md-2 col-sm-4"><div class="team-card"><span class="fw-bold text-dark">Abhishekh C.</span><br><small class="text-muted">Data Cleaning</small></div></div>
+    <div class="col-md-2 col-sm-4"><div class="team-card"><span class="fw-bold text-dark">Krishna V.</span><br><small class="text-muted">Visualization</small></div></div>
+    <div class="col-md-2 col-sm-4"><div class="team-card"><span class="fw-bold text-dark">Neha O.</span><br><small class="text-muted">Methodology</small></div></div>
+    <div class="col-md-2 col-sm-4"><div class="team-card"><span class="fw-bold text-dark">Rajesh T.</span><br><small class="text-muted">Documentation</small></div></div>
+</div>
+{% endblock %}

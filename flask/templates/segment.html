@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mb-4">
+    <h2 class="fw-bold">Hospital Archetype Segmenter</h2>
+    <p style="color: var(--text-muted);">Map facility KPIs against our K-Means clusters to identify operational behavior.</p>
+</div>
+
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+
+<div class="modern-card">
+    <form action="/unsupervised" method="POST" onsubmit="showLoader()">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <label class="form-label text-xs fw-bold text-uppercase" style="color: var(--text-muted);">Number of Beds</label>
+                <input type="number" class="form-control" name="beds" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label text-xs fw-bold text-uppercase" style="color: var(--text-muted);">Total Discharges</label>
+                <input type="number" class="form-control" name="discharges" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label text-xs fw-bold text-uppercase" style="color: var(--text-muted);">FTE Employees</label>
+                <input type="number" step="0.1" class="form-control" name="staff" required>
+            </div>
+            <div class="col-md-6 mt-4">
+                <label class="form-label text-xs fw-bold text-uppercase" style="color: var(--text-muted);">Total Revenue ($)</label>
+                <input type="number" class="form-control" name="revenue" required>
+            </div>
+            <div class="col-md-6 mt-4">
+                <label class="form-label text-xs fw-bold text-uppercase" style="color: var(--text-muted);">Total Costs ($)</label>
+                <input type="number" class="form-control" name="costs" required>
+            </div>
+        </div>
+        <hr class="my-5" style="border-color: #E2E8F0;">
+        <button type="submit" class="btn-modern float-end" style="background: var(--accent);"><i class="fa-solid fa-layer-group me-2"></i> Find Cluster</button>
+        <div class="clearfix"></div>
+    </form>
+</div>
+{% endblock %}

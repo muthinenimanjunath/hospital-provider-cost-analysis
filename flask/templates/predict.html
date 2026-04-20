@@ -1,215 +1,59 @@
 {% extends "base.html" %}
-{% block title %}Make Prediction - Hospital Prediction{% endblock %}
-{% block page_title %}Prediction Engine{% endblock %}
 
 {% block content %}
-<div class="card">
-    <h3><i class="fas fa-wand-magic-sparkles"></i> Hospital Performance Prediction</h3>
-    <p style="color: #6b7280; margin-bottom: 1.5rem;">Enter 10 fields to get instant predictions</p>
-    
-    <div id="alert"></div>
-    
-    <form id="predictionForm">
-        <!-- Hospital Basics Section -->
-        <div style="border: 1px solid #e5e7eb; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
-            <h4 style="margin-bottom: 1rem;"><i class="fas fa-hospital"></i> Hospital Basics</h4>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                <div class="form-group">
-                    <label>Year *</label>
-                    <input type="number" name="year" required min="2000" max="2030" value="2024" placeholder="2024">
-                </div>
-                
-                <div class="form-group">
-                    <label>Number of Beds *</label>
-                    <input type="number" name="number_of_beds" required min="1" placeholder="300">
-                </div>
-                
-                <div class="form-group">
-                    <label>Occupancy Rate (%) *</label>
-                    <input type="number" name="occupancy_rate" required min="0" max="100" step="0.1" placeholder="75">
-                </div>
+<div class="mb-4">
+    <h2 class="fw-bold">Financial Prediction Model</h2>
+    <p style="color: var(--text-muted);">Enter facility statistics to generate profitability metrics.</p>
+</div>
+
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+
+<div class="modern-card">
+    <form action="/supervised" method="POST" onsubmit="showLoader()">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <label class="form-label text-xs fw-bold text-uppercase" style="color: var(--text-muted);">Number of Beds</label>
+                <input type="number" class="form-control" name="beds" required placeholder="e.g. 250">
             </div>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                <div class="form-group">
-                    <label>Annual Discharges *</label>
-                    <input type="number" name="total_discharges__v___xviii___xix___unknown_" required min="0" placeholder="12000">
-                </div>
-                
-                <div class="form-group">
-                    <label>Avg Length of Stay (days) *</label>
-                    <input type="number" name="avg_length_of_stay" required min="0" step="0.1" placeholder="6.8">
-                </div>
+            <div class="col-md-4">
+                <label class="form-label text-xs fw-bold text-uppercase" style="color: var(--text-muted);">Total Discharges</label>
+                <input type="number" class="form-control" name="discharges" required placeholder="e.g. 12000">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label text-xs fw-bold text-uppercase" style="color: var(--text-muted);">FTE Employees</label>
+                <input type="number" step="0.1" class="form-control" name="staff" required placeholder="e.g. 850">
+            </div>
+
+            <div class="col-md-6 mt-4">
+                <label class="form-label text-xs fw-bold text-uppercase" style="color: var(--text-muted);">Total Revenue ($)</label>
+                <input type="number" class="form-control" name="revenue" required placeholder="e.g. 150000000">
+            </div>
+            <div class="col-md-6 mt-4">
+                <label class="form-label text-xs fw-bold text-uppercase" style="color: var(--text-muted);">Total Costs ($)</label>
+                <input type="number" class="form-control" name="costs" required placeholder="e.g. 142000000">
+            </div>
+
+            <div class="col-md-6 mt-4">
+                <label class="form-label text-xs fw-bold text-uppercase" style="color: var(--text-muted);">Geography</label>
+                <select class="form-select" name="rural_urban">
+                    <option value="Urban">Urban</option>
+                    <option value="Rural">Rural</option>
+                </select>
+            </div>
+            <div class="col-md-6 mt-4">
+                <label class="form-label text-xs fw-bold text-uppercase" style="color: var(--text-muted);">Control Type</label>
+                <select class="form-select" name="type_of_control">
+                    <option value="Voluntary Nonprofit - Church">Voluntary Nonprofit - Church</option>
+                    <option value="Government">Government</option>
+                    <option value="Proprietary">Proprietary (For Profit)</option>
+                </select>
             </div>
         </div>
-
-        <!-- Financial Data Section -->
-        <div style="border: 1px solid #e5e7eb; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
-            <h4 style="margin-bottom: 1rem;"><i class="fas fa-dollar-sign"></i> Financial Data</h4>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                <div class="form-group">
-                    <label>Revenue per Bed ($) *</label>
-                    <input type="number" name="revenue_per_bed" required min="0" placeholder="50000">
-                </div>
-                
-                <div class="form-group">
-                    <label>Total Expenses ($) *</label>
-                    <input type="number" name="total_other_expenses" required min="0" placeholder="15000000">
-                </div>
-                
-                <div class="form-group">
-                    <label>Total Employees (FTE) *</label>
-                    <input type="number" name="fte___employees_on_payroll" required min="0" step="0.1" placeholder="1200">
-                </div>
-            </div>
-        </div>
-
-        <!-- Classification Section -->
-        <div style="border: 1px solid #e5e7eb; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
-            <h4 style="margin-bottom: 1rem;"><i class="fas fa-tags"></i> Classification</h4>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                <div class="form-group">
-                    <label>Hospital Type *</label>
-                    <select name="type_of_control" required>
-                        <option value="">Select Type</option>
-                        <option value="Non-Profit">Non-Profit</option>
-                        <option value="For-Profit">For-Profit</option>
-                        <option value="Government">Government</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>Location Type *</label>
-                    <select name="rural_urban" required>
-                        <option value="">Select Location</option>
-                        <option value="Metropolitan">Metropolitan</option>
-                        <option value="Micropolitan">Micropolitan</option>
-                        <option value="Rural">Rural</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <!-- Auto-Calculated Fields Display -->
-        <div style="background: #f0fdf4; border: 1px solid #86efac; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
-            <h4 style="margin-bottom: 1rem; color: #15803d;"><i class="fas fa-calculator"></i> Auto-Calculated Fields</h4>
-            <p style="color: #6b7280; margin-bottom: 1rem; font-size: 0.9rem;">These fields are calculated automatically:</p>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                <div>
-                    <small style="color: #6b7280;">Total Bed Days</small><br>
-                    <strong id="bed_days" style="color: #15803d;">-</strong>
-                </div>
-                <div>
-                    <small style="color: #6b7280;">Total Patient Days</small><br>
-                    <strong id="patient_days" style="color: #15803d;">-</strong>
-                </div>
-                <div>
-                    <small style="color: #6b7280;">Staff to Bed Ratio</small><br>
-                    <strong id="staff_ratio" style="color: #15803d;">-</strong>
-                </div>
-                <div>
-                    <small style="color: #6b7280;">Discharges per Bed</small><br>
-                    <strong id="discharge_ratio" style="color: #15803d;">-</strong>
-                </div>
-            </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
-            <i class="fas fa-magic"></i> Generate Prediction
-        </button>
+        <hr class="my-5" style="border-color: #E2E8F0;">
+        <button type="submit" class="btn-modern float-end"><i class="fa-solid fa-microchip me-2"></i> Run Inference</button>
+        <div class="clearfix"></div>
     </form>
 </div>
-
-<!-- Results Section -->
-<div id="resultsContainer" style="display: none;">
-    <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-        <h3><i class="fas fa-chart-line"></i> Prediction Results</h3>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-            <div style="background: rgba(255,255,255,0.2); padding: 1.5rem; border-radius: 8px; text-align: center;">
-                <div style="font-size: 0.9rem; opacity: 0.9;">Profit Margin</div>
-                <div style="font-size: 2.5rem; font-weight: bold;" id="resultPM">-</div>
-                <small style="opacity: 0.8;">Accuracy: R² = 0.78</small>
-            </div>
-            
-            <div style="background: rgba(255,255,255,0.2); padding: 1.5rem; border-radius: 8px; text-align: center;">
-                <div style="font-size: 0.9rem; opacity: 0.9;">Charity Care Ratio</div>
-                <div style="font-size: 2.5rem; font-weight: bold;" id="resultCCR">-</div>
-                <small style="opacity: 0.8;">Accuracy: R² = 0.72</small>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-const form = document.getElementById('predictionForm');
-const resultsDiv = document.getElementById('resultsContainer');
-
-// Auto-calculate fields on input change
-form.addEventListener('input', updateCalculations);
-
-function updateCalculations() {
-    const beds = parseFloat(form.number_of_beds.value) || 0;
-    const discharges = parseFloat(form.total_discharges__v___xviii___xix___unknown_.value) || 0;
-    const los = parseFloat(form.avg_length_of_stay.value) || 0;
-    const fte = parseFloat(form.fte___employees_on_payroll.value) || 0;
-    
-    document.getElementById('bed_days').textContent = (beds * 365).toLocaleString();
-    document.getElementById('patient_days').textContent = Math.round(discharges * los).toLocaleString();
-    document.getElementById('staff_ratio').textContent = (beds > 0 ? (fte / beds).toFixed(2) : '-');
-    document.getElementById('discharge_ratio').textContent = (beds > 0 ? (discharges / beds).toFixed(2) : '-');
-}
-
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const btn = form.querySelector('button');
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-    
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-    
-    try {
-        const response = await fetch('/api/predict', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-            document.getElementById('resultPM').textContent = result.profit_margin + '%';
-            document.getElementById('resultCCR').textContent = result.charity_care_ratio + '%';
-            resultsDiv.style.display = 'block';
-            resultsDiv.scrollIntoView({behavior: 'smooth'});
-            
-            showAlert('Prediction successful!', 'success');
-        } else {
-            showAlert('Error: ' + result.error, 'error');
-        }
-    } catch (error) {
-        showAlert('Failed to make prediction', 'error');
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-magic"></i> Generate Prediction';
-    }
-});
-
-function showAlert(msg, type) {
-    const alert = document.getElementById('alert');
-    alert.innerHTML = `<div style="padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid; ${
-        type === 'success' ? 'background: #d1fae5; border-color: #10b981; color: #065f46;' : 
-        'background: #fee2e2; border-color: #ef4444; color: #7f1d1d;'
-    }">${msg}</div>`;
-}
-
-// Initial calculation
-updateCalculations();
-</script>
 {% endblock %}

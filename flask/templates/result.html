@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results — Hospital Financial Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <style>
+        :root{--navy:#0B2545;--deep:#134074;--teal:#13678A;--seafoam:#1B9AAA;--mint:#06D6A0;--accent:#EF8354;--off-white:#F0F4F8;--light-gray:#E2E8F0;--mid-gray:#94A3B8;--dark:#1E293B;--body:#334155;--green:#059669;--red:#DC2626;--yellow:#D97706}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'DM Sans',sans-serif;background:var(--off-white);color:var(--dark);min-height:100vh}
+        .top-bar{height:4px;background:linear-gradient(90deg,var(--teal),var(--seafoam),var(--mint))}
+        header{background:var(--navy);padding:1.5rem 2rem}
+        header h1{font-family:'DM Serif Display',serif;color:#fff;font-size:1.5rem}
+        header a{color:var(--seafoam);text-decoration:none;font-size:.9rem}
+        header a:hover{text-decoration:underline}
+        .header-row{display:flex;justify-content:space-between;align-items:center}
+        .container{max-width:900px;margin:-1rem auto 2rem;padding:0 1rem}
+        .card{background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(11,37,69,.08);padding:1.5rem 2rem;margin-bottom:1.25rem}
+        .section-title{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--navy);margin-bottom:.15rem}
+        .section-sub{color:var(--mid-gray);font-size:.82rem;margin-bottom:1rem}
+        .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
+        .metric{background:var(--off-white);border-radius:10px;padding:1.2rem;text-align:center;border-top:3px solid var(--teal)}
+        .metric.accent{border-top-color:var(--accent)}
+        .metric.green{border-top-color:var(--green)}
+        .metric-val{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--navy);line-height:1.1}
+        .metric-label{font-size:.78rem;color:var(--mid-gray);text-transform:uppercase;letter-spacing:.04em;margin-top:.3rem}
+        .cluster-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--navy);color:#fff;border-radius:8px;padding:.6rem 1.2rem;font-weight:700;font-size:.95rem}
+        .cluster-badge .dot{width:10px;height:10px;border-radius:50%;background:var(--seafoam)}
+        .cluster-desc{color:var(--body);font-size:.9rem;margin-top:.6rem;line-height:1.5}
+        .perf-wrap{margin-top:1rem}
+        .perf-bar-bg{width:100%;height:14px;background:var(--light-gray);border-radius:7px;overflow:hidden}
+        .perf-bar{height:100%;border-radius:7px;transition:width .8s ease}
+        .perf-bar.top{background:var(--green)}.perf-bar.above{background:var(--seafoam)}.perf-bar.needs{background:var(--yellow)}
+        .perf-label-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:.4rem}
+        .perf-label{font-weight:700;font-size:.9rem}
+        .perf-label.top{color:var(--green)}.perf-label.above{color:var(--seafoam)}.perf-label.needs{color:var(--yellow)}
+        .perf-pct{font-size:.85rem;color:var(--mid-gray)}
+        .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem}
+        .kpi{background:var(--off-white);border-radius:8px;padding:.75rem;text-align:center;border-left:3px solid var(--teal)}
+        .kpi-val{font-weight:700;font-size:1.1rem;color:var(--navy)}
+        .kpi-name{font-size:.72rem;color:var(--mid-gray);text-transform:uppercase;margin-top:.15rem}
+        .btn-back{display:inline-block;padding:.7rem 1.5rem;background:var(--teal);color:#fff;border-radius:8px;text-decoration:none;font-weight:700;font-size:.9rem;transition:background .2s}
+        .btn-back:hover{background:var(--deep)}
+        footer{text-align:center;padding:1.5rem;color:var(--mid-gray);font-size:.8rem}
+    </style>
+</head>
+<body>
+    <div class="top-bar"></div>
+    <header><div class="header-row"><h1>Prediction Results</h1><a href="/">&larr; New Analysis</a></div></header>
+    <div class="container">
+        <div class="card">
+            <div class="section-title">Supervised Model Predictions</div>
+            <div class="section-sub">Random Forest / ExtraTrees regression on integrated CMS–BLS–Census dataset</div>
+            <div class="metrics">
+                <div class="metric"><div class="metric-val">{{ r.profit_margin_pct }}%</div><div class="metric-label">Predicted Profit Margin</div></div>
+                <div class="metric accent"><div class="metric-val">{{ r.charity_care_pct }}%</div><div class="metric-label">Predicted Charity Care Ratio</div></div>
+                <div class="metric green"><div class="metric-val">{{ r.score }}</div><div class="metric-label">Performance Score</div></div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="section-title">Hospital Segment (Unsupervised)</div>
+            <div class="section-sub">K-Means clustering across 13 operational and financial features</div>
+            <div class="cluster-badge"><span class="dot"></span>{{ r.cluster_name }}</div>
+            <div class="cluster-desc">{{ r.cluster_desc }}</div>
+            <div class="perf-wrap">
+                {% set bar_class = 'top' if r.label == 'Top Performer' else ('above' if r.label == 'Above Average' else 'needs') %}
+                <div class="perf-bar-bg"><div class="perf-bar {{ bar_class }}" style="width:{{ r.percentile }}%"></div></div>
+                <div class="perf-label-row">
+                    <span class="perf-label {{ bar_class }}">{{ r.label }}</span>
+                    <span class="perf-pct">{{ r.percentile }}th percentile within cluster</span>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="section-title">Computed KPIs</div>
+            <div class="section-sub">Derived from your inputs</div>
+            <div class="kpi-grid">
+                <div class="kpi"><div class="kpi-val">{{ r.occupancy_rate }}%</div><div class="kpi-name">Occupancy Rate</div></div>
+                <div class="kpi"><div class="kpi-val">${{ "{:,.0f}".format(r.revenue_per_bed) }}</div><div class="kpi-name">Revenue / Bed</div></div>
+                <div class="kpi"><div class="kpi-val">{{ r.staff_to_bed }}</div><div class="kpi-name">Staff-to-Bed Ratio</div></div>
+                <div class="kpi"><div class="kpi-val">{{ r.discharges_per_bed }}</div><div class="kpi-name">Discharges / Bed</div></div>
+            </div>
+        </div>
+        <a href="/" class="btn-back">&#8592; Analyze Another Hospital</a>
+    </div>
+    <footer>Group 8 &bull; Capstone Project 2 &bull; St. Clair College &bull; Winter 2026</footer>
+</body>
+</html>

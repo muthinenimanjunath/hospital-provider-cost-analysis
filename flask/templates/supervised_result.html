@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mb-4">
+    <h2 class="fw-bold">Prediction Results</h2>
+    <p style="color: var(--text-muted);">Generated via Random Forest & Extra Trees Ensembles</p>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        
+        <div class="modern-card mb-4 text-center">
+            <h5 class="text-muted text-uppercase fw-bold mb-3">Predicted Profit Margin</h5>
+            
+            {% if r.profit_margin_pct > 0 %}
+                <h1 class="display-3 fw-bold text-success">{{ r.profit_margin_pct }}%</h1>
+                <p class="text-success"><i class="fa-solid fa-arrow-trend-up"></i> Positive Margin</p>
+            {% else %}
+                <h1 class="display-3 fw-bold text-danger">{{ r.profit_margin_pct }}%</h1>
+                <p class="text-danger"><i class="fa-solid fa-arrow-trend-down"></i> Operating at a loss</p>
+            {% endif %}
+            
+            <div class="progress mt-4" style="height: 25px; border-radius: 20px; background-color: #f1f5f9;">
+                {% set bar_width = r.profit_margin_pct if r.profit_margin_pct > 0 else 0 %}
+                <div class="progress-bar {% if r.profit_margin_pct > 0 %}bg-success{% else %}bg-danger{% endif %} progress-bar-striped progress-bar-animated" 
+                     role="progressbar" 
+                     style="width: {{ bar_width }}%">
+                </div>
+            </div>
+        </div>
+
+        <div class="modern-card text-center mb-5">
+            <h5 class="text-muted text-uppercase fw-bold mb-3">Predicted Charity Care Ratio</h5>
+            <h1 class="display-4 fw-bold" style="color: var(--accent);">{{ r.charity_care_pct }}%</h1>
+            <p class="text-muted">Percentage of total operating expenses</p>
+        </div>
+
+        <div class="text-center">
+            <a href="/predict-form" class="btn btn-outline-secondary px-4 py-2" style="border-radius: 12px; font-weight: 500;">
+                <i class="fa-solid fa-rotate-left me-2"></i> Run Another Prediction
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

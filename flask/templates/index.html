@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, var(--primary) 0%, #7C3AED 100%);
+        border-radius: 24px;
+        padding: 4rem 3rem;
+        color: white;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(67, 24, 255, 0.15);
+    }
+    
+    .hero-bg-shape {
+        position: absolute;
+        top: -50%; right: -10%;
+        width: 500px; height: 500px;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        border-radius: 50%;
+        z-index: 0;
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .quick-stat {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: transform 0.3s ease;
+    }
+    .quick-stat:hover { transform: translateY(-5px); }
+
+    .feature-card {
+        background: white; border-radius: 20px; padding: 2.5rem;
+        height: 100%; border: 1px solid #E2E8F0;
+        box-shadow: 0 10px 30px rgba(112, 144, 176, 0.05);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        cursor: pointer; position: relative; overflow: hidden;
+    }
+
+    .feature-card::before {
+        content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+        background: var(--primary); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+    }
+    .feature-card.segment::before { background: var(--accent); }
+    .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(112, 144, 176, 0.12); }
+    .feature-card:hover::before { transform: scaleX(1); }
+
+    .icon-wrapper {
+        width: 64px; height: 64px; border-radius: 16px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.8rem; margin-bottom: 1.5rem;
+    }
+    .icon-predict { background: rgba(67, 24, 255, 0.1); color: var(--primary); }
+    .icon-segment { background: rgba(1, 181, 116, 0.1); color: var(--accent); }
+</style>
+
+<div class="hero-section">
+    <div class="hero-bg-shape"></div>
+    <div class="hero-content row align-items-center">
+        <div class="col-lg-7 mb-4 mb-lg-0">
+            <span class="badge bg-white text-primary mb-3 px-3 py-2 rounded-pill fw-bold" style="font-size: 0.85rem;">
+                <i class="fa-solid fa-flask me-2"></i> Capstone Phase 2 Deployment
+            </span>
+            <h1 class="display-4 fw-bold mb-3" style="letter-spacing: -1px;">Hospital Financial Intelligence</h1>
+            <p class="lead text-white-50 mb-0" style="max-width: 600px;">
+                Advanced machine learning ensembles integrating CMS, BLS, and Census data to predict facility profitability and classify operational segments.
+            </p>
+        </div>
+        <div class="col-lg-5">
+            <div class="row g-3">
+                <div class="col-6">
+                    <div class="quick-stat text-center">
+                        <h2 class="fw-bold mb-0">69k+</h2>
+                        <span class="text-white-50 text-sm">Provider Records</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="quick-stat text-center">
+                        <h2 class="fw-bold mb-0">13</h2>
+                        <span class="text-white-50 text-sm">Cluster Features</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5 pb-3">
+    <div class="col-12 mb-4">
+        <h3 class="fw-bold text-dark">Analysis Modules</h3>
+        <p style="color: var(--text-muted);">Select a predictive model to run an analysis on a specific facility.</p>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-6">
+        <div class="feature-card" onclick="window.location.href='/predict-form'">
+            <div class="icon-wrapper icon-predict">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <h4 class="fw-bold text-dark mb-3">Profitability Prediction</h4>
+            <p style="color: var(--text-muted); line-height: 1.6;" class="mb-4">
+                Deploy our tuned <strong>Random Forest</strong> and <strong>Extra Trees</strong> regressors to forecast Profit Margins and Charity Care Ratios based on facility capacity, geography, and payroll structures.
+            </p>
+            <div class="d-flex align-items-center text-primary fw-bold mt-auto">
+                Launch Predictor <i class="fa-solid fa-arrow-right ms-2 transition-transform"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="feature-card segment" onclick="window.location.href='/segment-form'">
+            <div class="icon-wrapper icon-segment">
+                <i class="fa-solid fa-diagram-project"></i>
+            </div>
+            <h4 class="fw-bold text-dark mb-3">Operational Segmentation</h4>
+            <p style="color: var(--text-muted); line-height: 1.6;" class="mb-4">
+                Execute a <strong>K-Means Clustering</strong> algorithm across a standardized 13-feature matrix to categorize the hospital into one of six distinct operational and utilization archetypes.
+            </p>
+            <div class="d-flex align-items-center fw-bold mt-auto" style="color: var(--accent);">
+                Launch Clustering <i class="fa-solid fa-arrow-right ms-2 transition-transform"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row border-top pt-4">
+    <div class="col-md-8">
+        <p class="text-muted text-sm mb-0">
+            <i class="fa-solid fa-circle-info me-2"></i> Models trained on integrated datasets from the Centers for Medicare & Medicaid Services. Engineered by Group 8.
+        </p>
+    </div>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+        <a href="/about" class="text-decoration-none fw-bold" style="color: var(--primary);">
+            View Full Methodology &rarr;
+        </a>
+    </div>
+</div>
+{% endblock %}
